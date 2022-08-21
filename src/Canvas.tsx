@@ -24,7 +24,7 @@ const uMax = 7.5;
 const vMax = 10.0;
 
 class Cell{
-    neighbor: number[];
+    neighbor: any[];
     u: number;
     v: number;
     u_reacted: number;
@@ -42,13 +42,30 @@ class Cell{
         this.v_spreaded = 0.0;
     }
 
-    react(){
-
-    }
-
     spreaded(){
-        
+        let sum_u = 0.0;
+        let sum_v = 0.0;
+
+        this.neighbor.map((nei) =>{
+            sum_u += nei.u;
+            sum_v += nei.v;
+        });
+        this.u_spreaded = Du * (sum_u - 4.0 * this.u);
+        this.v_spreaded = Dv * (sum_v - 4.0 * this.v);
     }
+
+    reacted(){
+        this.u_reacted = this.u * this.u * this.v - (f+k) * this.u;
+        this.u_reacted = Math.max(0, Math.min(this.u_reacted, uMax));
+        this.v_reacted = -1 * this.u * this.u * this.v + f * (1-k);
+        this.v_reacted = Math.max(0, Math.min(this.v_reacted, vMax));
+    }
+
+    result(){
+        this.u = this.u + dt * (this.u_spreaded + this.u_reacted);
+        this.v = this.v + dt * (this.v_spreaded + this.v_reacted);
+    }
+
 }
 
 const sketch = (p: p5) =>{
@@ -109,7 +126,8 @@ const Canvas = () => {
     return(
         <div>
             <h1>Reactive Deffusion Simulation</h1>
-            <div id="canvas" className="canvas controlls"/>
+            <canvas id="canvas" width="640" height="480"></canvas>
+            {/* <div id="canvas" className="canvas controlls"/> */}
         </div>
         
     );
