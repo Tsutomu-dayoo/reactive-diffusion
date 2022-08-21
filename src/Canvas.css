@@ -1,0 +1,9 @@
+.canvas{
+    border: 3px solid gray;
+}
+
+.controlls {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
