@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import p5 from "p5";
 import './Canvas.css';
 import { clear } from "console";
@@ -67,67 +67,33 @@ class Cell{
     }
 
 }
-
-const sketch = (p: p5) =>{
-    p.setup = () =>{
-        p.createCanvas(width, height).parent('canvas');
-
-
-        for(let y=0; y<height; y++){
-            cells.push([]);
-            for(let x=0; x<width; x++){
-                const cell = new Cell();
-                cells[y].push(cell);
-                const c = cells[y][x];
-                if((square_start<=y && y<=square_end) && (square_start<=x && x<=square_end)){
-                    c.u = 0;
-                    c.v = 0;
-                }
-            }
-        }
-
-        // for(let y=0; y<height; y++){
-        //     for(let x=0; x<width; x++){
-        //         const c = cells[y][x];
-        //         c.neighbor.pusu(cells[Math.max(y-1,0)][x]);
-        //         c.neighbor.pusu(cells[Math.min(y+1,cell_length-1)][x]);
-        //         c.neighbor.pusu(cells[y][Math.max(x-1,0)]);
-        //         c.neighbor.pusu(cells[y][Math.min(x+1,cell_length-1)]);
-        //     }
-        // }
-    }
-
-    p.draw = () =>{
-        p.background(192,192,192);
-        p.scale(5);
-        //p.clear(0,0,0,0);
-
-        //描画
-        for(let y=0; y<height; y++){
-            for(let x=0; x<width; x++){
-                const c = cells[y][x];
-                const r = (c.u/uMax)*255;
-                const b = (c.u/vMax)*255;
-                p.stroke(r,r,b);
-                p.point(x, y);
-
-            }
-        }
-    }
+//描画
+const draw = () =>{
 
 }
 
 const Canvas = () => {
+    const canvasRef = useRef(null);
+
+    const getContext = (): CanvasRenderingContext2D => {
+        const canvas: any = canvasRef.current;
+
+        return canvas.getContext('2d');
+    };
 
     useEffect(() => {
-        new p5(sketch)
+        const ctx: CanvasRenderingContext2D = getContext();
+        ctx.fillRect(0,0, width, height);
+        ctx.save();
+
+        ctx.fillStyle = 'rgb(255, 165, 0)';
+        ctx.fillRect(square_start, square_start, SQUARE_SIZE, SQUARE_SIZE);
+        ctx.save();
     }, [])
 
     return(
         <div>
-            <h1>Reactive Deffusion Simulation</h1>
-            <canvas id="canvas" width="640" height="480"></canvas>
-            {/* <div id="canvas" className="canvas controlls"/> */}
+            <canvas width={width} height={height} id="canvas" className=".canvas-border" ref={canvasRef}></canvas>
         </div>
         
     );
