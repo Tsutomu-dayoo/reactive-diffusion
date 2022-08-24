@@ -1,5 +1,6 @@
-.canvas-border{
-    border: 3px solid gray;
+.canvas{
+    border: 3px solid rgb(11, 10, 10);
+    background-color: rgb(198, 51, 51);
 }
 
 .controlls {
