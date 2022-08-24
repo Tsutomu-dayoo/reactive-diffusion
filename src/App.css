@@ -1,5 +1,10 @@
+h1{
+text-align: center;
+margin: auto
+}
 .body {
-	min-width: 800px;
+  text-align: center;
+	/* min-width: 800px; */
   display: table;
   margin: auto;
 }
@@ -8,15 +13,5 @@
 }
 
 .canvas{
-  margin-top: 30px;
+  margin-top: 0px;
 }
-
-.left{
-  border-right: 10px solid gray;
-  margin-top: 30px;
-}
-
-.right{
-
-}
-
