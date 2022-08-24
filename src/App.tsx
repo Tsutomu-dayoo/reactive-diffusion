@@ -6,15 +6,15 @@ import './App.css';
 
 const App = () =>{
   return (
-    <div className='body'>
-      <div className='left list'>
+    <div>
+      <h1>Reactive Deffusion Simulation</h1>
+      <div className='body'>
         <Button />
-      </div>
-      <div className='right list canvas'>
         <Canvas />
       </div>
-          
+
     </div>
+    
   );
 }
 
